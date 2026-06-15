@@ -1,7 +1,7 @@
 import os
 import json
 import streamlit as st
-from tensorflow import keras
+import keras
 
 _BASE_DIR     = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _MODEL_PATH   = os.path.join(_BASE_DIR, "data", "maize_cnn_final.keras")
