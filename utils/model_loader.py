@@ -1,30 +1,19 @@
 import os
 import json
-import requests
+import gdown
 import streamlit as st
 from tensorflow import keras
 
 _MODEL_CACHE  = "/tmp/maize_cnn_final.keras"
 _LABELS_CACHE = "/tmp/class_labels.json"
 
-_BASE_DIR         = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_LOCAL_MODEL      = os.path.join(_BASE_DIR, "data", "maize_cnn_final.keras")
-_LOCAL_LABELS     = os.path.join(_BASE_DIR, "data", "class_labels.json")
+_BASE_DIR     = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_LOCAL_MODEL  = os.path.join(_BASE_DIR, "data", "maize_cnn_final.keras")
+_LOCAL_LABELS = os.path.join(_BASE_DIR, "data", "class_labels.json")
 
 
 def _download_from_gdrive(file_id: str, dest: str) -> None:
-    session  = requests.Session()
-    url      = f"https://drive.google.com/uc?id={file_id}&export=download"
-    response = session.get(url, stream=True)
-    for key, value in response.cookies.items():
-        if key.startswith("download_warning"):
-            url      = f"{url}&confirm={value}"
-            response = session.get(url, stream=True)
-            break
-    with open(dest, "wb") as fh:
-        for chunk in response.iter_content(chunk_size=32_768):
-            if chunk:
-                fh.write(chunk)
+    gdown.download(id=file_id, output=dest, quiet=False)
 
 
 @st.cache_resource(show_spinner=False)
