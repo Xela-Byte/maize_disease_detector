@@ -9,10 +9,12 @@ __pycache__/
 venv/
 .venv/
 
-# Model artefacts (too large for Git — host on Google Drive)
+# Model artefacts — excluded by default, except bundled data files
 *.keras
 *.h5
 *.json
+!data/maize_cnn_final.keras
+!data/class_labels.json
 
 # OS
 .DS_Store
